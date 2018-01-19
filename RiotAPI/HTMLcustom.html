@@ -1,0 +1,238 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="CSSpage.css">
+    <style>
+        /*background of the program*/
+        body {
+            background-color: #212121;
+        }
+
+        /*get rid of bullet points*/
+        ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #333;
+        }
+
+        /*align links in a row*/
+        li {
+            float: left;
+        }
+
+            /*how drop down looks when hovered over*/
+            li a, .dropbtn {
+                display: inline-block;
+                color: white;
+                /*align the text, change this*/
+                text-align: center;
+                padding: 14px 16px;
+                text-decoration: none;
+            }
+
+            /*padding, color, blocks*/
+            li a {
+                display: block;
+                color: white;
+                text-align: center;
+                padding: 14px 16px;
+                text-decoration: none;
+            }
+
+                /*on hover change color to be something else*/
+                li a:hover, .dropdown:hover .dropbtn {
+                    background-color: #111;
+                }
+
+            /*dropdwon for the tab*/
+            li.dropdown {
+                display: inline-block;
+            }
+
+        /*content drop down*/
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #696969;
+            min-width: 169px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+
+            /*words in the drop down*/
+            .dropdown-content a {
+                color: white;
+                padding: 12px 16px;
+                text-decoration: none;
+                display: block;
+                text-align: left;
+            }
+
+                /*color of the drop down when hovered over*/
+                .dropdown-content a:hover {
+                    background-color: #a8a8a8;
+                }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        /*highlights the tab you are currently on*/
+        .active {
+            background-color: #4CAF50;
+        }
+    </style>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <!--Banner with logo-->
+    <img src="htmlBanner3.png" />
+
+    <!--header  -->
+    <ul>
+        <!--href="pg1" (the pg1 should be a url link)-->
+        <li><a class="active" href="HTMLcustom.html">Get Started</a></li>
+        <li><a href="HTMLgeneralGuide.html">General Guides</a></li>
+        <li class="dropdown">
+            <a href="javascript:void(0)" class="dropbtn">Specific Role Guides</a>
+            <div class="dropdown-content">
+                <a href="HTMLtop.html">Top Guide</a>
+                <a href="HTMLjungle.html">Jungle Guide</a>
+                <a href="HTMLmid.html">Mid Guide</a>
+                <a href="HTMLadc.html">ADC Guide</a>
+                <a href="HTMLsup.html">Support Guide</a>
+            </div>
+        </li>
+        <li><a href="HTMLrewards.html">Rewards</a></li>
+        <!--<li><a href="#pg3">Specific Guides</a></li>-->
+        <li style="float:right"><a href="HTMLabout.html">About</a></li>
+    </ul>
+
+    <!--The key-->
+    <!--RGAPI-24956eb2-8be7-4732-bb52-03dc4611ba1e-->
+        
+    <!--make the textbox and button-->
+    <input type="text" id="getName">
+    <button onclick="storeSumName()">Begin Search!</button>
+
+    <!--this returns the name, debug purposes-->
+    <p id="retName"></p>
+
+    <p id="test"></p>
+    <p id="one"></p>
+
+
+    <!--code that stores the name into a variable when button is clicked and returns said name-->
+    <script type="text/javascript">
+        //api key and 
+        var key = "RGAPI-73a2317f-e088-4199-8d5f-688cc4ca08c2";
+        var apiKey = "?api_key=";
+        //summoner variable that user puts in
+        var summoner;
+
+        var fullKey = apiKey.concat(key);
+        /*
+        var getJSON = function (url, callback) {
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', url, true);
+            xhr.responseType = 'json';
+            xhr.onload = function () {
+                var status = xhr.status;
+                if (status == 200) {
+                    callback(null, xhr.response);
+                } else {
+                    callback(status);
+                }
+            };
+            xhr.send();
+        };*/
+
+
+        //method stores summoner name 
+        function storeSumName() {
+            summoner = document.getElementById("getName").value;
+            document.getElementById("retName").innerHTML = summoner;
+
+            //find if the input they gave us is true or not
+            inputCheck(summoner);
+        }
+
+        //checks if user input is an actual summoner 
+        function inputCheck(name) {
+
+            //what are request headers?
+
+            var baseURL = 'https://na1.api.riotgames.com/lol/summoner/v3/summoners/by-name/';
+            var modURL = baseURL.concat(name);
+            var newURL = modURL.concat(fullKey);
+
+
+            $.getJSON(newURL, function (data) {
+                //data is the JSON string
+                
+            });
+
+            $("button").click(function () {
+                $.getJSON("demo_ajax_json.js", function (result) {
+                    $.each(result, function (i, field) {
+                        $("div").append(field + " ");
+                    });
+                });
+            });
+
+
+
+            /*
+            getJSON(newURL,
+                function (err, data) {
+                    if (err != null) {
+                        alert('Something went wrong: ' + err);
+                        var test = "it didnt work";
+                        document.getElementById("test").innerHTML = test;
+                        
+                    } else {
+                        alert('Your query count: ' + data.query.count);
+                        var test = "it worked";
+                        document.getElementById("test").innerHTML = test;
+                    }
+                });
+
+            //getJSON[0]
+            */
+
+            /*
+            fetch(newURL)
+                //transform data into json
+                .then(res => res.json())
+                .then((out) => {
+                    // Your code for handling the data you get from the API
+                    var parsed = JSON.parse(data);
+
+                    var test = "it worked";
+
+                    document.getElementById("test").innerHTML = test;
+
+                    document.getElementById("one").innerHTML = parsed[0];
+                   
+
+                })
+                .catch(err => {
+                    // This is where you run code if the server returns any errors
+                    var test = "didnt work";
+                    document.getElementById("test").innerHTML = test;
+                });
+
+      
+
+
+    </script>
+
+    
+
+
+
+</body>
+</html>
